@@ -4,6 +4,8 @@ The aim of this project is to provide various templates and examples for buildin
 
 ## Lists
 
+- DB
+    - [ORM with N+1 problem and solution](./simple_orm_example/)
 - [Sentiment Analyzer](./sentiment_analyzer/)
 - [Simple Dependency Injection](./simple_dependency_injection/)
 - Session
