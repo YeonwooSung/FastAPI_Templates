@@ -1,0 +1,39 @@
+version: '3.6'
+
+networks:
+  fastapi-example:
+    driver: bridge
+
+services:
+  api:
+    build: .
+    restart: always
+    ports:
+     - "5000:5000"
+    networks:
+      - fastapi-example
+    depends_on:
+      - "db"
+    command: ["./wait-for-it.sh", "db:5432", "--", "./startup.sh", "0.0.0.0", "5000"]
+    environment: # Example ENV configuration 
+      LOG_LEVEL: "DEBUG"
+      DB_USER: "postgres"
+      DB_PASSWORD: "example"
+      DB_HOST: "db"
+  db:
+    image: postgres
+    restart: always
+    networks:
+      - fastapi-example
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432 # Expose this port while running REST service locally
+  adminer:
+    image: adminer
+    networks:
+      - fastapi-example
+    restart: always
+    ports:
+      - 8080:8080

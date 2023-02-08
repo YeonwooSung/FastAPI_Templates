@@ -1,0 +1,1 @@
+alembic upgrade head && python3 -m uvicorn main:app --host $1 --port $2
