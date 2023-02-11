@@ -4,6 +4,11 @@ The aim of this project is to provide various templates and examples for buildin
 
 ## Lists
 
+- Admin
+    * [fastapi_ami_admin](http://atomi.gitee.io/fastapi_amis_admin/tutorials/basic/PageAdmin/)
+        * [simple example](./ami_admin_example/simple_admin_example/main.py)
+        * [FormAdmin example](./ami_admin_example/admin_form_example/main.py)
+        * [ModelAdmin example](./ami_admin_example/admin_model_example/main.py)
 - DB
     - [ORM with N+1 problem and solution](./simple_orm_example/)
     - [ORM example with alembic for DB migration](./orm-example-with-alembic/)
