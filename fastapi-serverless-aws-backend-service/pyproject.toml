@@ -1,0 +1,69 @@
+[tool.poetry]
+name = "fastapi-serverless-aws-backend-service"
+version = "0.1.0"
+description = "This project act as a template for a FastAPI server deployed on AWS Lambda for production use."
+authors = ["Roy Pasternak <roy@larium.ai>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7.2"
+fastapi = {extras = ["all"], version = "^0.88.0"}
+mangum = "^0.17.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+mypy = "^0.991"
+black = "^22.12.0"
+isort = "^5.11.4"
+autoflake = "^2.0.0"
+pylint = "^2.15.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 130
+target-version = ['py36', 'py37', 'py38', 'py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+  \.toml
+  |\.sh
+  |\.git
+  |\.ini
+  |Dockerfile
+  |Jenkinfile
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | .serverless
+  | node_modules
+)/
+'''
+
+[tool.isort]
+profile = "black"
+group_by_package = true
+combine_straight_imports = true
+force_single_line = true
+combine_as_imports = true
+lines_between_types = 1
+lines_after_imports = 2
+src_paths = ["src"]
+extend_skip = [".serverless", "node_modules"]
+
+[tool.pylint.master]
+max-line-length = 130
+jobs=0
+fail-under=7.0
+disable=["missing-module-docstring"]
+ignore=[".serverless","node_modules"]
+extension-pkg-whitelist=["pydantic"]
