@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pydantic==1.10.2
+SQLAlchemy
+psycopg2-binary==2.9.5
+alembic==1.8.1
+pydantic[email]
+asyncpg
