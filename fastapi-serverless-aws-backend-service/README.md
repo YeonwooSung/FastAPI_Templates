@@ -1,38 +1,40 @@
 <p align="center">
-<img src="assets/sls_lambda_fastapi.png" data-canonical-src="assets/sls_lambda_fastapi.png" width=400/>
+	<img src="assets/sls_lambda_fastapi.png" data-canonical-src="assets/sls_lambda_fastapi.png" width=400/>
 </p>
 
 # FastAPI Serverless AWS Backend Server
 
 This project act as a template for a FastAPI server deployed on AWS Lambda for production use.
 
-
 ## Features
+
 - Project structure template
 - FastAPI boilar plate code:
-  - Root application with versioning API (currently V1 and V2 are defined)
-  - Middleware for CORS, exceptions and logging
-  - Config module with settings loaded from your `.env` file
-  - Logs are working also in production envionment (AWS Lambda)
-  - Test suite setup with TestClient
-  - Health check route and exceptions routes
+	- Root application with versioning API (currently V1 and V2 are defined)
+	- Middleware for CORS, exceptions and logging
+	- Config module with settings loaded from your `.env` file
+	- Logs are working also in production envionment (AWS Lambda)
+	- Test suite setup with TestClient
+	- Health check route and exceptions routes
  - Python code quality tools already setup both locally and aspart of the CI (Pylint, Black, Isort, MyPy)
  - Dockerfile with AWS lambda base image for the FastAPI service conatiner
  - Poetry for python enviornment managment
  - Serverless.yml boilar plate:
-   - Lambda function for the FastAPI backend service
-   - Lambda is conatiner-based and images are deployed to AWS ECR
-   - Defined cloud watch IAM roles and retention policy (30 days)
-   - Defined XRay IAM roles
-   - Custom domain management support in three sub-domains, one per stage.
-  - Scripts folder so you can easily run it all
-   
+	- Lambda function for the FastAPI backend service
+	- Lambda is conatiner-based and images are deployed to AWS ECR
+	- Defined cloud watch IAM roles and retention policy (30 days)
+	- Defined XRay IAM roles
+	- Custom domain management support in three sub-domains, one per stage.
+	- Scripts folder so you can easily run it all
+
 ## Future Features
+
 - Boilar plate code for caching using FastAPI_Cache
 - Basic authentication and authorization with Auth0
 - Database migration support using Alembic
 
 ## Prerequisites
+
 - An AWS account
 - The [AWS CLI](https://aws.amazon.com/cli/) installed and configured
 - [Python 3.7.2 or later](https://www.python.org/downloads/)
@@ -43,6 +45,7 @@ This project act as a template for a FastAPI server deployed on AWS Lambda for p
 - (Optional) An AWS Certificate of SSL/TLS certificate for a domain name in the AWS Certificate Manager ([this guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains-prerequisites.html) can help)
 
 ## Getting Started
+
 1. Clone the repository
 ```
 git clone https://github.com/larium/fastapi-serverless-aws-backend.git
@@ -57,10 +60,7 @@ poetry install
 
 3. Set up local environment in `.env` file
 - Create the file: `touch .env`
-- Set the following values inside:
-```
-TBA
-```
+- Set the suitable values
 
 4. Set access permissions to scripts directory
 ```bash
@@ -113,6 +113,7 @@ Test it </br>
 ```
 
 ## Enviorenments
+
 What | How (script) | Where (endpoint)
 --- | --- | --- 
 **Local** | `./scripts/start` | `http://localhost:8000`
@@ -121,15 +122,10 @@ What | How (script) | Where (endpoint)
 **Staging Domain**|`./scripts/create-domain staging`</br>`./scripts/deploy staging`|`https://api-staging.your.domain`
 **Production Domain**|`./scripts/create-domain prod`</br>`./scripts/deploy prod`|`https://api.your.domain`
 
-## Contributing
-We welcome contributions to this project! If you have an idea for a new feature or improvement, please open an issue or pull request.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-
 ## Tips
+
 ### Set python interpreter in VScode
+
 - Run `poetry run which python` and copy the python path
 - `command+shift+p` to open the VScode command shortcuts and enter `Python: Select Interpreter`
 - Select `+ Enter interpreter path...` and paste the python path
