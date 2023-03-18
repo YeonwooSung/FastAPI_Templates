@@ -31,8 +31,7 @@ We will make a user model in Fast api and postgres database. We will use SQLAlch
 
 ## Steps
 
-Lets create a user model in `main.py`, In this file we will mention the fast api things, routers,
-startup event, shut down event and database connection.
+Lets create a user model in `main.py`, In this file we will mention the fast api things, routers, startup event, shut down event and database connection:
 
 ```python
 # Imports
@@ -70,9 +69,9 @@ async def root():
 
 ```
 
+Lets Make a User model now in `routers/user/models.py`.
 
-Lets Make a User model now in `routers/user/models.py`
-our model will have id, fname, lname, email, password and we will use SQLAlchemy as an ORM to interact with the database.
+Our model will have id, fname, lname, email, password and we will use SQLAlchemy as an ORM to interact with the database:
 
 ```python
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
@@ -90,8 +89,9 @@ class User(Base):
 
 ```
 
-Now we make Serializers for the User model in `routers/user/serializers.py`
-this serializer will help us to convert the data from the database to the python object and vice versa.
+Now we make Serializers for the User model in `routers/user/serializers.py`.
+
+This serializer will help us to convert the data from the database to the python object and vice versa:
 
 ```python
 from dataclasses import Field
@@ -111,7 +111,9 @@ class UserBase(BaseModel):
         orm_mode = True
 ```
 
-Now we will make a router for user in `routers/user/view.py` file, this file will have all the routes for the user model, which will help us in communicating with the api.
+Now we will make a router for user in `routers/user/view.py` file.
+
+This file will have all the routes for the user model, which will help us in communicating with the api:
 
 ```python
 from fastapi import status, HTTPException, Depends, APIRouter
