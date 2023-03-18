@@ -16,6 +16,8 @@ The aim of this project is to provide various templates and examples for buildin
 - [FastAPI with Kafka Topic creation](./FastAPI-Kafka-Topic-Creation/)
 - [Sentiment Analyzer](./sentiment_analyzer/)
 - [Simple Dependency Injection](./simple_dependency_injection/)
-- Session
-    * [Simple Session Server](./simple_session_server/)
-    * [Redis Session Server](./redis_session_server/)
+- FastAPI advanced practices
+    * [FastAPI Custom Exception Handlers And Logs](./fastapi-custom-exception-handlers-and-logs/)
+    * Session
+        * [Simple Session Server](./simple_session_server/)
+        * [Redis Session Server](./redis_session_server/)
