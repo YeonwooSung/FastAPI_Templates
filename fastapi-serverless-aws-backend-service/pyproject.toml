@@ -8,8 +8,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7.2"
-fastapi = {extras = ["all"], version = "^0.88.0"}
+fastapi = "^0.95.0"
 mangum = "^0.17.0"
+starlette = "^0.26.1"
 
 
 [tool.poetry.group.dev.dependencies]
