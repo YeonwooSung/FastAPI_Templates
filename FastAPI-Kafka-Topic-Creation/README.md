@@ -7,7 +7,7 @@ In the previous topic we made kafka topics with the help of cli, In this blog we
 
 ## Install Kafka withd docker 
 
-> Previous Blog Link: https://medium.com/dev-genius/kafka-installtions-and-kafka-topics-f0b7c81754d8
+Please follow the instructions [here](https://medium.com/dev-genius/kafka-installtions-and-kafka-topics-f0b7c81754d8).
 
 ## Installation
 
