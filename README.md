@@ -19,5 +19,5 @@ The aim of this project is to provide various templates and examples for buildin
 - FastAPI advanced practices
     * [FastAPI Custom Exception Handlers And Logs](./basic-functionality/fastapi-custom-exception-handlers-and-logs/)
     * Session
-        * [Simple Session Server](./simple_session_server/)
+        * [Simple Session Server](./basic-functionality/simple_session_server/)
         * [Redis Session Server](./redis_session_server/)
