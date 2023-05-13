@@ -2,7 +2,7 @@
 
 The aim of this project is to provide various templates and examples for building a FastAPI WAS.
 
-## Lists
+## Simple Templates
 
 - Admin
     * [fastapi_ami_admin](http://atomi.gitee.io/fastapi_amis_admin/tutorials/basic/PageAdmin/)
@@ -22,7 +22,7 @@ The aim of this project is to provide various templates and examples for buildin
         * [Simple Session Server](./basic-functionality/simple_session_server/)
         * [Redis Session Server](./redis_session_server/)
 
-## Projects
+## Simple Projects
 
 - [GeoIP Server](./sample_projects/geoip/)
 - [Sentiment Analyzer](./sample_projects/sentiment_analyzer/)
