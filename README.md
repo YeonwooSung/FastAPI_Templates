@@ -26,3 +26,4 @@ The aim of this project is to provide various templates and examples for buildin
 ## Projects
 
 - [GeoIP Server](./sample_projects/geoip/)
+- [Simple Web Scraping Server](./sample_projects/scrap/)
