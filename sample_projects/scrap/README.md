@@ -2,6 +2,8 @@
 
 A simple Web scraping API server built with FastAPI.
 
+The main aim of this API server is to parse the [OpenGraph](https://ogp.me/) of the given web page by scraping the web page.
+
 ## Instructions
 
 0. Set up virtualenv if required.
