@@ -14,7 +14,6 @@ The aim of this project is to provide various templates and examples for buildin
     * [ORM with N+1 problem and solution](./sql-db/simple_orm_example/)
     * [ORM example with alembic for DB migration](./sql-db/orm-example-with-alembic/)
 - [FastAPI with Kafka Topic creation](./FastAPI-Kafka-Topic-Creation/)
-- [Sentiment Analyzer](./sentiment_analyzer/)
 - [Simple Dependency Injection](./simple_dependency_injection/)
 - FastAPI advanced practices
     * [FastAPI Custom Exception Handlers And Logs](./basic-functionality/fastapi-custom-exception-handlers-and-logs/)
@@ -26,4 +25,5 @@ The aim of this project is to provide various templates and examples for buildin
 ## Projects
 
 - [GeoIP Server](./sample_projects/geoip/)
+- [Sentiment Analyzer](./sample_projects/sentiment_analyzer/)
 - [Simple Web Scraping Server](./sample_projects/scrap/)
