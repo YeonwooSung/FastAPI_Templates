@@ -11,6 +11,9 @@ DSN_CONSTANT = "postgresql://{}:{}@{}"
 # init logger
 logger = Logger().get_logger()
 
+# define isolation levels
+_ISOLATION_LEVELS = ["AUTOCOMMIT", "READ COMMITTED", "READ UNCOMMITTED", "REPEATABLE READ", "SERIALIZABLE"]
+
 
 class Database(metaclass=Singleton):
     '''
@@ -23,7 +26,12 @@ class Database(metaclass=Singleton):
         host = os.getenv("DB_HOST", 'localhost')
         self.dsn = DSN_CONSTANT.format(user_name, password, host)
 
-    def create_engine(self, pool_size:int=10, max_overflow:int=0) -> None:
+    def create_engine(
+        self,
+        pool_size:int=10,
+        max_overflow:int=0,
+        isolation_level:str="REPEATABLE READ"
+    ) -> None:
         """Create a connection pool with the database.
 
         Args:
@@ -31,9 +39,12 @@ class Database(metaclass=Singleton):
             max_overflow (int, optional): [description]. Defaults to 0.
         """
         try:
-            logger.debug(f"Creating a DB engine ({self.dsn}) with pool_size={pool_size} and max_overflow={max_overflow}")
+            if isolation_level not in _ISOLATION_LEVELS:
+                raise ValueError(f"Isolation level {isolation_level} is not supported. Supported levels are {_ISOLATION_LEVELS}")
+
+            logger.debug(f"Creating a DB engine ({self.dsn}) with pool_size={pool_size} and max_overflow={max_overflow} :: isolation_level={isolation_level}")
             if self.engine is None:
-                self.engine = create_engine(self.dsn, pool_size=pool_size, max_overflow=max_overflow)
+                self.engine = create_engine(self.dsn, pool_size=pool_size, max_overflow=max_overflow, isolation_level=isolation_level)
         # TODO: Replace with more sophisticated exception handling
         except Exception as ex:
             logger.error(f"Failed to create a DB engine, {str(ex)}")
