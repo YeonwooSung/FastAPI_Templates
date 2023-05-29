@@ -10,6 +10,7 @@ The aim of this project is to provide various templates and examples for buildin
         * [FormAdmin example](./ami_admin_example/admin_form_example/main.py)
         * [ModelAdmin example](./ami_admin_example/admin_model_example/main.py)
 - SQL DB
+    * [Basic CRUD template with ORM, connection pool, and Singleton](./sql-db/fastapi-crud/)
     * [FastAPI with SQLAlchemy DB connection pools](./sql-db/FastApi-SqlAlchemy/)
     * [ORM with N+1 problem and solution](./sql-db/simple_orm_example/)
     * [ORM example with alembic for DB migration](./sql-db/orm-example-with-alembic/)
