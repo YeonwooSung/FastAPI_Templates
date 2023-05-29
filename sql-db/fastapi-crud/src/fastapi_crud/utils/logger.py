@@ -11,14 +11,23 @@ class Logger(metaclass=Singleton):
     """Logger class."""
 
     def __init__(self) -> None:
-        """Initialize"""
+        """
+        Initialize the logger.
+
+        Use the proxy pattern to create a singleton logger when it is actually required.
+        """
         self.log_name = os.getenv("LOG_NAME", "example_app")
-        self.log_level = os.getenv("LOG_LEVEL", "INFO")
+        self.log_level = os.getenv("LOG_LEVEL", "DEBUG") # [DEBUG, INFO, WARNING, ERROR, CRITICAL]
         self.logger = None
 
 
     def get_logger(self) -> logging.Logger:
-        """Get a logger instance"""
+        """
+        Get a logger instance
+
+        Returns:
+            logging.Logger: Logger instance
+        """
         if not self.logger:
             logger = logging.getLogger(self.log_name)
             logger.setLevel(self.log_level)
