@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_crud.utils.database import Database
 from fastapi_crud.middleware.request_id import RequestID
 from fastapi_crud.middleware.request_logger import RequestLogger
+from fastapi_crud.api.user import router as user_router
 
 
 # Fast API
@@ -36,5 +37,5 @@ async def startup():
 async def root():
     return {"message": "CMMS APP"}
 
-
-# app.include_router(student.router, prefix="/user")
+# include API routers
+app.include_router(user_router, prefix="/user")
