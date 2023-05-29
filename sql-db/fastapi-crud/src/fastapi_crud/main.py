@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # custom module
-from fastapi_crud.database import database_instance
+from fastapi_crud.utils.database import Database
 
 
 # Fast API
@@ -17,6 +17,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# create a singleton instance of Database
+database_instance = Database()
 
 # Start up event
 @app.on_event("startup")

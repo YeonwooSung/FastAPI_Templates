@@ -3,6 +3,7 @@ import os
 from typing import Union
 
 # custom module
+from fastapi_crud.utils.singleton import Singleton
 from fastapi_crud.utils.logger import Logger
 
 # constant for database connection template string
@@ -11,7 +12,7 @@ DSN_CONSTANT = "postgresql://{}:{}@{}"
 logger = Logger().get_logger()
 
 
-class Database:
+class Database(metaclass=Singleton):
     '''
     Create a singleton connection pool with the database.
     '''
@@ -50,7 +51,3 @@ class Database:
     def dispose_connection(self):
         """Close the Database connection pool."""
         self.engine.dispose(True)
-
-
-# create a singleton instance of Database
-database_instance = Database()
