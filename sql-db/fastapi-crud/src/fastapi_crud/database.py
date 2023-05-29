@@ -1,29 +1,41 @@
 from sqlalchemy import create_engine
+import os
+from typing import Union
 
 # custom module
 from fastapi_crud.utils.logger import Logger
 
+# constant for database connection template string
+DSN_CONSTANT = "postgresql://{}:{}@{}"
 # init logger
 logger = Logger().get_logger()
 
 
 class Database:
+    '''
+    Create a singleton connection pool with the database.
+    '''
     def __init__(self) -> None:
-        self.engine = create_engine("mysql+mysqldb://scott:tiger@localhost/test")
+        self.engine = None
+        user_name = os.getenv("DB_USER", 'postgres')
+        password = os.getenv("DB_PASSWORD", 'postgres')
+        host = os.getenv("DB_HOST", 'localhost')
+        self.dsn = DSN_CONSTANT.format(user_name, password, host)
 
-    def create_engine(self):
+    def create_engine(self, pool_size:int=10, max_overflow:int=0) -> None:
         """Create a connection pool with the database.
 
-        Raises:
-            ex: Ex
+        Args:
+            pool_size (int, optional): [description]. Defaults to 10.
+            max_overflow (int, optional): [description]. Defaults to 0.
         """
         try:
-            logger.debug("Creating a DB engine")
+            logger.debug(f"Creating a DB engine ({self.dsn}) with pool_size={pool_size} and max_overflow={max_overflow}")
             if self.engine is None:
-                self.engine = create_engine(self.dsn, pool_size=100, max_overflow=0)
+                self.engine = create_engine(self.dsn, pool_size=pool_size, max_overflow=max_overflow)
         # TODO: Replace with more sophisticated exception handling
         except Exception as ex:
-            logger.debug(f"Failed to create a DB engine, {str(ex)}")
+            logger.error(f"Failed to create a DB engine, {str(ex)}")
 
     def get_engine(self):
         """Get the database engine.
@@ -31,10 +43,14 @@ class Database:
         Returns:
             Engine: Database engine.
         """
+        if self.engine is None:
+            self.create_engine()
         return self.engine
 
     def dispose_connection(self):
         """Close the Database connection pool."""
         self.engine.dispose(True)
 
+
+# create a singleton instance of Database
 database_instance = Database()
