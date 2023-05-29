@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # custom module
 from fastapi_crud.utils.database import Database
+from fastapi_crud.middleware.request_id import RequestID
+from fastapi_crud.middleware.request_logger import RequestLogger
 
 
 # Fast API
@@ -18,6 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# add custom middlewares
+app.add_middleware(RequestLogger)
+app.add_middleware(RequestID)
+
 # create a singleton instance of Database
 database_instance = Database()
 
@@ -29,3 +35,6 @@ async def startup():
 @app.get("/")
 async def root():
     return {"message": "CMMS APP"}
+
+
+# app.include_router(student.router, prefix="/user")
