@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+# configure base dir
+import sys
+sys.path.append('.')
+sys.path.append('..')
+
 # custom module
 from fastapi_crud.utils.database import Database
 from fastapi_crud.middleware.request_id import RequestID
