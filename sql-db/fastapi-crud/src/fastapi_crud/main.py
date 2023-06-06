@@ -44,3 +44,7 @@ async def root():
 
 # include API routers
 app.include_router(user_router, prefix="/user")
+
+#TODO 1) Complex schema & N+1 problem preventing codes
+#TODO 2) sqlalchemy repository & Fake repository
+#TODO 3) Unit test codes
