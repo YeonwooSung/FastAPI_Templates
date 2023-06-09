@@ -11,6 +11,7 @@ from fastapi_crud.utils.database import Database
 from fastapi_crud.utils.logger import Logger
 from fastapi_crud.api.models.user import User
 from fastapi_crud.api.schema.user import UserSchema
+from fastapi_crud.api.repository.user import UserRepository
 
 
 # global variables
@@ -20,10 +21,10 @@ logger = Logger().get_logger()
 
 
 @router.get("/", tags=["User"])
-def get_all_students(
+async def get_all_students(
     offset: int = 0,
     limit: int = 10,
-    engine: Engine = Depends(connector.get_engine)
+    engine: Engine = Depends(connector.get_engine),
 ):
     """
     API to fetch info of all the users.
@@ -35,7 +36,9 @@ def get_all_students(
     """
     try:
         session = Session(engine)
-        users = session.query(User).offset(offset).limit(limit).all()
+        user_repository = UserRepository(session)
+        users = await user_repository.get(offset, limit)
+
         session.close()
 
         return users
@@ -47,7 +50,7 @@ def get_all_students(
 
 
 @router.post("/", tags=["User"])
-def create_user(
+async def create_user(
     user: UserSchema,
     engine: Engine = Depends(connector.get_engine)
 ):
@@ -65,14 +68,9 @@ def create_user(
             user.id = UUID(str(uuid4()))
 
         session = Session(engine)
-        session.add(
-            User(
-                id=str(user.id),
-                name=user.name,
-                age=user.age,
-            )
-        )
-        session.commit()
+        user_repository = UserRepository(session)
+        user = await user_repository.create(user)
+
         session.close()
 
         response = {
@@ -87,7 +85,7 @@ def create_user(
 
 
 @router.put("/{id}", tags=["User"])
-def update_student(
+async def update_student(
     id: str,
     user: UserSchema,
     engine: Engine = Depends(connector.get_engine)
@@ -108,12 +106,8 @@ def update_student(
             user.id = UUID(str(uuid4()))
 
         session = Session(engine)
-        session.execute(
-            update(User)
-            .where(User.id == id)
-            .values(name=User.name, age=User.age)
-        )
-        session.commit()
+        user_repository = UserRepository(session)
+        user = await user_repository.update(user)
         session.close()
 
         response = {
@@ -129,7 +123,7 @@ def update_student(
 
 
 @router.delete("/{id}", tags=["Student"])
-def delete_student(id: str, engine: Engine = Depends(connector.get_engine)):
+async def delete_student(id: str, engine: Engine = Depends(connector.get_engine)):
     """Deletes a Student from the database.
 
     Args:
@@ -138,9 +132,8 @@ def delete_student(id: str, engine: Engine = Depends(connector.get_engine)):
     """
     try:
         session = Session(engine)
-
-        session.delete(session.query(User).filter(User.id == id).first())
-        session.commit()
+        user_repository = UserRepository(session)
+        await user_repository.delete(id)
         session.close()
         response = {f"User with ID {id} deleted successfully."}
 
