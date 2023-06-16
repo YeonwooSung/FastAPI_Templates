@@ -1,5 +1,7 @@
+from random import randint
 from sqlalchemy.orm import Session
 from sqlalchemy import update
+from uuid import uuid4
 
 # custom module
 from fastapi_crud.api.models.user import User
@@ -70,3 +72,65 @@ class UserRepository:
         '''
         self.db.delete(self.db.query(User).filter(User.id == id).first())
         self.db.commit()
+
+    async def bulk_insert(self, users: list[User]) -> list[User]:
+        '''
+        Bulk insert users.
+
+        Args:
+            users (list[User]): List of users to be inserted.
+
+        Returns:
+            list[User]: List of inserted users.
+        '''
+        self.db.bulk_save_objects(users)
+        self.db.commit()
+        return users
+
+    async def bulk_insert_mapping(self, num:int=2000) -> list[User]:
+        '''
+        Bulk insert users using mapping.
+
+        Args:
+            num (int, optional): Number of users to be inserted. Defaults to 2000.
+
+        Returns:
+            list[User]: List of inserted users.
+        '''
+        self.db.bulk_insert_mappings(
+            User,
+            [
+                {"id": str(uuid4()), "name": "user_" + str(i), "age": randint(1, 100)}
+                for i in range(num)
+            ],
+        )
+        self.db.commit()
+
+    async def insert_or_update(self, user: User) -> User:
+        '''
+        Insert or update a user.
+
+        Args:
+            user (User): User object to be inserted or updated.
+
+        Returns:
+            User: Inserted or updated user object.
+        '''
+        self.db.merge(user)
+        self.db.commit()
+        self.db.refresh(user)
+        return user
+
+    async def bulk_update(self, users: list[User]) -> list[User]:
+        '''
+        Bulk update users.
+
+        Args:
+            users (list[User]): List of users to be updated.
+
+        Returns:
+            list[User]: List of updated users.
+        '''
+        self.db.bulk_update_mappings(User, users)
+        self.db.commit()
+        return users
