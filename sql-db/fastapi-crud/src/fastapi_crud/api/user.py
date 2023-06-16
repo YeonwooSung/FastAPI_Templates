@@ -50,15 +50,11 @@ async def get_all_students(
 
 
 @router.post("/", tags=["User"])
-async def create_user(
-    user: UserSchema,
-    engine: Engine = Depends(connector.get_engine)
-):
+async def create_user(user: UserSchema):
     """API to create a new user.
 
     Args:
         user (UserSchema): User object to be created.
-        engine (Engine, optional): Database engine. Defaults to Depends(connector.get_engine).
 
     Raises:
         HTTPException
@@ -67,11 +63,9 @@ async def create_user(
         if user.id == None:
             user.id = UUID(str(uuid4()))
 
-        session = Session(engine)
-        user_repository = UserRepository(session)
-        user = await user_repository.create(user)
-
-        session.close()
+        with connector.get_session() as session:
+            user_repository = UserRepository(session)
+            user = await user_repository.create(user)
 
         response = {
             "id": user.id,
@@ -87,8 +81,7 @@ async def create_user(
 @router.put("/{id}", tags=["User"])
 async def update_student(
     id: str,
-    user: UserSchema,
-    engine: Engine = Depends(connector.get_engine)
+    user: UserSchema
 ):
     """
     API to update an user.
@@ -96,7 +89,6 @@ async def update_student(
     Args:
         id (str): ID of the user to be updated.
         user (UserSchema): User object to be updated.
-        engine (Engine, optional): Database engine. Defaults to Depends(connector.get_engine).
 
     Raises:
         HTTPException
@@ -105,10 +97,9 @@ async def update_student(
         if user.id == None:
             user.id = UUID(str(uuid4()))
 
-        session = Session(engine)
-        user_repository = UserRepository(session)
-        user = await user_repository.update(user)
-        session.close()
+        with connector.get_session() as session:
+            user_repository = UserRepository(session)
+            user = await user_repository.update(user)
 
         response = {
             f"User {user.name} updated successfully with ID {user.id}."
@@ -131,10 +122,9 @@ async def delete_student(id: str, engine: Engine = Depends(connector.get_engine)
         engine (Engine, optional): Database engine. Defaults to Depends(connector.get_engine).
     """
     try:
-        session = Session(engine)
-        user_repository = UserRepository(session)
-        await user_repository.delete(id)
-        session.close()
+        with connector.get_session() as session:
+            user_repository = UserRepository(session)
+            await user_repository.delete(id)
         response = {f"User with ID {id} deleted successfully."}
 
         return response
