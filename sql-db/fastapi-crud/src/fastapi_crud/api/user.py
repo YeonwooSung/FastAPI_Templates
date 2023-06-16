@@ -106,7 +106,7 @@ async def update_student(
         }
 
         return response
-    except Exception:
+    except:
         logger.exception(traceback.format_exc())
         raise HTTPException(
             status.HTTP_500_INTERNAL_SERVER_ERROR, "Failed to update the user."
@@ -128,6 +128,6 @@ async def delete_student(id: str, engine: Engine = Depends(connector.get_engine)
         response = {f"User with ID {id} deleted successfully."}
 
         return response
-    except Exception as ex:
+    except:
         logger.exception(traceback.format_exc())
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "Failed to delete the user.")
