@@ -13,6 +13,7 @@ sys.path.append("..")
 from MovieAPI.utils import limiter, Logger
 from MovieAPI.utils.db import engine
 from MovieAPI.middlewares import RequestID, RequestLogger
+from MovieAPI.api import actors_router, movies_router, subscriptions_router, token_router, users_router
 
 
 app = FastAPI(title="Movie API server")
@@ -28,6 +29,7 @@ app.add_middleware(GZipMiddleware, minimum_size=500)  # add gzip compression
 app.add_middleware(RequestLogger)
 app.add_middleware(RequestID)
 
+
 @app.on_event("startup")
 def on_startup() -> None:
     Logger().get_logger() # init logger
@@ -37,11 +39,13 @@ def on_startup() -> None:
 def on_shutdown() -> None:
     pass
 
-# app.include_router(movies.router)
-# app.include_router(actors.router)
-# app.include_router(subscriptions.router)
-# app.include_router(users.router)
-# app.include_router(token.router)
+
+# add routers
+app.include_router(actors_router)
+app.include_router(movies_router)
+app.include_router(subscriptions_router)
+app.include_router(token_router)
+app.include_router(users_router)
 
 
 if __name__ == "__main__":
