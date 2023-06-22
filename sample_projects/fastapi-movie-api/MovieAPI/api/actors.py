@@ -16,7 +16,19 @@ def get_actor(
     actor_id: int,
     session: Session = Depends(get_session)
 ) -> Actor:
-    '''Get an actor by the given id.'''
+    '''
+    Retrieve the details of a specific actor by their ID.
+
+    Args:
+        actor_id (int): Actor ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If actor with given ID is not found.
+
+    Returns:
+        Actor: Actor details.
+    '''
     actor: Actor | None = session.get(Actor, actor_id)
     if actor:
         return actor
@@ -34,8 +46,16 @@ def get_actors(
     nationality: str | None = Query(None),
     session: Session = Depends(get_session)
 ) -> list[Actor]:
-    '''Get actors by given query parameters.'''
+    '''
+    Retrieve a list of actors with optional filtering, sorting, and pagination.
 
+    Args:
+        actor_id (int): Actor ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Returns:
+        list[Actor]: List of actors.
+    '''
     query = select(Actor)
 
     if name:
@@ -54,8 +74,17 @@ def add_actor(
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session)
 ) -> Actor:
-    '''Add a new actor.'''
+    '''
+    Add a new actor to the database.
 
+    Args:
+        actor_input (ActorInput): Actor details.
+        current_user (User, optional): Currently logged in user. Defaults to Depends(get_current_user).
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Returns:
+        Actor: Newly created actor.
+    '''
     new_actor: Actor = Actor.from_orm(actor_input)
     session.add(new_actor)
     session.commit()
@@ -68,8 +97,16 @@ def delete_actor(
     actor_id: int,
     session: Session = Depends(get_session)
 ) -> None:
-    '''Delete an actor with the given id.'''
+    '''
+    Remove a specific actor from the database by their ID.
 
+    Args:
+        actor_id (int): Actor ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If actor with given ID is not found.
+    '''
     actor: Actor | None = session.get(Actor, actor_id)
     if actor:
         session.delete(actor)
@@ -87,8 +124,20 @@ def update_actor(
     new_actor: ActorInput,
     session: Session = Depends(get_session)
 ) -> Actor:
-    '''Update an actor with the given id.'''
+    '''
+    Remove a specific actor from the database by their ID.
 
+    Args:
+        actor_id (int): Actor ID.
+        new_actor (ActorInput): New actor details.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If actor with given ID is not found.
+
+    Returns:
+        Actor: Updated actor details.
+    '''
     actor: Actor | None = session.get(Actor, actor_id)
     if actor:
         for field, value in new_actor.dict().items():

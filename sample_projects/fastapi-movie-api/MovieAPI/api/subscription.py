@@ -14,6 +14,19 @@ def get_subscription(
     subscription_id: int,
     session: Session = Depends(get_session)
 ) -> Subscription:
+    '''
+    Retrieve the details of a specific subscription plan by its ID.
+
+    Args:
+        subscription_id (int): Subscription ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If subscription with given ID is not found.
+
+    Returns:
+        Subscription: Subscription details.
+    '''
     subscription: Subscription | None = session.get(Subscription, subscription_id)
     if subscription:
         return subscription
@@ -30,7 +43,17 @@ def get_subscriptions(
     is_active: bool | None = Query(None),
     session: Session = Depends(get_session)
 ) -> list[Subscription]:
-    '''Get subscriptions by given query parameters.'''
+    '''
+    Retrieve a list of available subscription plans.
+
+    Args:
+        plan (str, optional): Filter subscriptions by plan name. Defaults to None.
+        is_active (bool, optional): Filter subscriptions by active status. Defaults to None.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Returns:
+        list[Subscription]: List of subscriptions.
+    '''
     query = select(Subscription)
 
     if plan:
@@ -46,7 +69,16 @@ def add_subscription(
     subscription_input: SubscriptionInput,
     session: Session = Depends(get_session)
 ) -> Subscription:
-    '''Add a new subscription.'''
+    '''
+    Add a new subscription plan to the database.
+
+    Args:
+        subscription_input (SubscriptionInput): Subscription details.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Returns:
+        Subscription: Newly created subscription details.
+    '''
     new_subscription: Subscription = Subscription.from_orm(subscription_input)
     session.add(new_subscription)
     session.commit()
@@ -59,8 +91,16 @@ def delete_subscription(
     subscription_id: int,
     session: Session = Depends(get_session)
 ) -> None:
-    '''Delete subscription with given id.'''
+    '''
+    Remove a subscription from the database by its ID.
 
+    Args:
+        subscription_id (int): Subscription ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If subscription with given ID is not found.
+    '''
     subscription: Subscription | None = session.get(Subscription, subscription_id)
     if subscription:
         session.delete(subscription)
@@ -78,8 +118,20 @@ def update_subscription(
     new_subscription: SubscriptionInput,
     session: Session = Depends(get_session)
 ) -> Subscription:
-    '''Update a subscription with given id.'''
+    '''
+    Update the details of a specific subscription plan by its ID.
 
+    Args:
+        subscription_id (int): Subscription ID.
+        new_subscription (SubscriptionInput): New subscription details.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If subscription with given ID is not found.
+
+    Returns:
+        Subscription: Updated subscription details.
+    '''
     subscription: Subscription | None = session.get(Subscription, subscription_id)
     if subscription:
         for field, value in new_subscription.dict().items():

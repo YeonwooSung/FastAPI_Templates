@@ -14,7 +14,16 @@ def get_movies(
     release_year: int | None = None,
     session: Session = Depends(get_session)
 ) -> list[Movie]:
-    '''Get movies by given query parameters.'''
+    '''
+    Retrieve a list of movies with optional filtering, sorting, and pagination.
+
+    Args:
+        release_year (int, optional): Filter movies by release year. Defaults to None.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Returns:
+        list[Movie]: List of movies.
+    '''
     query = select(Movie)
     if release_year:
         query = query.where(Movie.release_year == release_year)
@@ -26,7 +35,19 @@ def get_movie(
     movie_id: int,
     session: Session = Depends(get_session)
 ) -> Movie:
-    '''Get a movie by the given id.'''
+    '''
+    Retrieve the details of a specific movie by its ID.
+
+    Args:
+        movie_id (int): Movie ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If movie with given ID is not found.
+
+    Returns:
+        Movie: Movie details.
+    '''
     movie: Movie | None = session.get(Movie, movie_id)
     if movie:
         return movie
@@ -42,7 +63,16 @@ def add_movie(
     movie_input: MovieInput,
     session: Session = Depends(get_session)
 ) -> Movie:
-    '''Add a new movie.'''
+    '''
+    Add a new movie to the database.
+
+    Args:
+        movie_input (MovieInput): Movie details.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Returns:
+        Movie: Movie details.
+    '''
     new_movie: Movie = Movie.from_orm(movie_input)
     session.add(new_movie)
     session.commit()
@@ -55,7 +85,16 @@ def delete_movie(
     movie_id: int,
     session: Session = Depends(get_session)
 ) -> None:
-    '''Delete movie with given id.'''
+    '''
+    Remove a specific movie from the database by its ID.
+
+    Args:
+        movie_id (int): Movie ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If movie with given ID is not found.
+    '''
     movie: Movie | None = session.get(Movie, movie_id)
     if movie:
         session.delete(movie)
@@ -73,8 +112,20 @@ def update_movie(
     new_movie: MovieInput,
     session: Session = Depends(get_session)
 ) -> Movie:
-    '''Update movie with given id.'''
+    '''
+    Update the details of a specific movie by its ID.
 
+    Args:
+        movie_id (int): Movie ID.
+        new_movie (MovieInput): New movie details.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If movie with given ID is not found.
+
+    Returns:
+        Movie: Updated movie details.
+    '''
     movie: Movie | None = session.get(Movie, movie_id)
     if movie:
         # update movie from database with values from new_movie
@@ -96,8 +147,17 @@ def add_actor_to_movie(
     actor_id: int,
     session: Session = Depends(get_session)
 ) -> None:
-    '''Add actor to movie'''
+    '''
+    Add an actor to a movie.
 
+    Args:
+        movie_id (int): Movie ID.
+        actor_id (int): Actor ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If movie or actor with given ID is not found.
+    '''
     movie: Movie | None = session.get(Movie, movie_id)
     if not movie:
         raise HTTPException(
@@ -123,8 +183,17 @@ def remove_actor_from_movie(
     actor_id: int,
     session: Session = Depends(get_session)
 ) -> None:
-    '''Remove actor from movie'''
+    '''
+    Remove an actor from a movie.
 
+    Args:
+        movie_id (int): Movie ID.
+        actor_id (int): Actor ID.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: If movie, actor or link between them is not found.
+    '''
     movie: Movie | None = session.get(Movie, movie_id)
     if not movie:
         raise HTTPException(

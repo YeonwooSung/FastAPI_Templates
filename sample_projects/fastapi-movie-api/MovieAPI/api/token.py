@@ -22,6 +22,19 @@ def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     session: Session = Depends(get_session)
 ):
+    '''
+    Authenticate a user and generate an access token.
+
+    Args:
+        form_data (Annotated[OAuth2PasswordRequestForm, Depends()]): OAuth2 password request form.
+        session (Session, optional): Database session. Defaults to Depends(get_session).
+
+    Raises:
+        HTTPException: 401 exception if user is not found or password is incorrect.
+
+    Returns:
+        Token: Access token.
+    '''
     query = select(User).where(User.email == form_data.username)
     user: User | None = session.exec(query).first()
 
@@ -43,6 +56,12 @@ def login_for_access_token(
 
 
 def raise_401_exception():
+    '''
+    Raise 401 exception.
+
+    Raises:
+        HTTPException: 401 exception.
+    '''
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Incorrect username or password",
