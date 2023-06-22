@@ -25,6 +25,7 @@ The aim of this project is to provide various templates and examples for buildin
 
 ## Simple Projects
 
+- [Movie API Server](./sample_projects/fastapi-movie-api/)
 - [GeoIP Server](./sample_projects/geoip/)
 - [Sentiment Analyzer](./sample_projects/sentiment_analyzer/)
 - [Simple Web Scraping Server](./sample_projects/scrap/)
