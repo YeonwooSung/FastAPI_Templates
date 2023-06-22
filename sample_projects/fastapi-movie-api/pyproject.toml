@@ -11,9 +11,10 @@ fastapi = "^0.97.0"
 sqlmodel = "^0.0.8"
 slowapi = "^0.1.8"
 passlib = "^1.7.4"
-jose = "^1.0.0"
 python-decouple = "^3.8"
 uvicorn = "^0.22.0"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-multipart = "^0.0.6"
 
 
 [build-system]
