@@ -7,9 +7,9 @@ from sqlmodel import Session, create_engine
 is_testing = os.environ.get("TESTING")
 
 if is_testing:
-    database_url = "sqlite:///./tests/db/streamfinity_test.db"
+    database_url = "sqlite:///./tests/mydb/movieapi.db"
 else:
-    database_url = "sqlite:///./MovieAPI/db/streamfinity.db"
+    database_url = "sqlite:///./MovieAPI/mydb/movieapi.db"
 
 
 engine = create_engine(
