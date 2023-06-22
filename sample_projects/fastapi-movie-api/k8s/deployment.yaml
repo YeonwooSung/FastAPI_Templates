@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamfinity-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: MovieAPI
+  template:
+    metadata:
+      labels:
+        app: MovieAPI
+    spec:
+      containers:
+      - name: MovieAPI
+        image: MovieAPI:v0.1.0
+        ports:
+        - containerPort: 8000
