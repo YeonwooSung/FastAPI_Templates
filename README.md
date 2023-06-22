@@ -19,7 +19,7 @@ The aim of this project is to provide various templates and examples for buildin
     * [FastAPI Custom Exception Handlers And Logs](./basic-functionality/fastapi-custom-exception-handlers-and-logs/)
     * [FastAPI Custom Logging Middleware](./basic-functionality/simple-logging-middleware/)
     * Session
-        * [Simple Session Server](./basic-functionality/simple_session_server/)
+        * [Simple Session Server](./basic-functionality/simple-session-server/)
         * [Redis Session Server](./redis_session_server/)
 
 ## Simple Projects
