@@ -10,11 +10,13 @@ sys.path.append("..")
 
 # import custom modules
 # from MovieAPI.api import actors, movies, subscriptions, token, users
+from MovieAPI.utils import limiter, Logger
 from MovieAPI.utils.db import engine
 from MovieAPI.middlewares import RequestID, RequestLogger
 
 
 app = FastAPI(title="Movie API server")
+app.state.limitter = limiter  # add rate limitter
 
 # add middlewares
 app.add_middleware(
@@ -28,6 +30,7 @@ app.add_middleware(RequestID)
 
 @app.on_event("startup")
 def on_startup() -> None:
+    Logger().get_logger() # init logger
     SQLModel.metadata.create_all(engine)
 
 @app.on_event("shutdown")
@@ -43,4 +46,4 @@ def on_shutdown() -> None:
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, reload=True)
+    uvicorn.run('main:app', reload=True)
