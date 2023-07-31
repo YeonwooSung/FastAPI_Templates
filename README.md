@@ -19,9 +19,11 @@ The aim of this project is to provide various templates and examples for buildin
     * [FastAPI Custom Exception Handlers And Logs](./basic-functionality/fastapi-custom-exception-handlers-and-logs/)
     * [FastAPI Custom Logging Middleware](./basic-functionality/simple-logging-middleware/)
     * [FastAPI with circuit breaker for external API service](./basic-functionality/simple-circuit-breaker/)
+    * WebSocket
+        * [FastAPI WebSocket with PubSub on Redis Queue](./basic-functionality/redis_pubsub_websocket/)
     * Session
         * [Simple Session Server](./basic-functionality/simple-session-server/)
-        * [Redis Session Server](./redis_session_server/)
+        * [Redis Session Server](./basic-functionality/redis_session_server/)
 
 ## Simple Projects
 
