@@ -17,6 +17,16 @@ class SentimentResponse(BaseModel):
     sentiment: str
     confidence: float
 
+# Start up event
+@app.on_event("startup")
+async def startup():
+    import gc
+
+    # PyTorch internally uses a lot of private objects, which activates the garbage collector.
+    # To avoid the garbage collector to be activated, we freeze the garbage collector.
+    # This will put the references of the PyTorch objects to the permanent generation, which is not cleaned by the garbage collector.
+    gc.freeze()
+
 
 @app.post("/predict", response_model=SentimentResponse)
 def predict(request: SentimentRequest, model: Model = Depends(get_model)):
