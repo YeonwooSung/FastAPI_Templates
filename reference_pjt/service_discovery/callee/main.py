@@ -23,7 +23,7 @@ from config import Config
 app = FastAPI()
 
 
-ZK_SCRAP_PATH = "/the_red/services/scrap/nodes"
+ZK_SCRAP_PATH = "/zk/services/scrap/nodes"
 
 my_settings = Settings()
 conf = Config(my_settings.CONFIG_PATH)

@@ -31,7 +31,7 @@ app = FastAPI()
 my_settings = Settings()
 conf = Config(my_settings.CONFIG_PATH)
 
-ZK_SCRAP_PATH = "/the_red/services/scrap/nodes"
+ZK_SCRAP_PATH = "/zk/services/scrap/nodes"
 
 init_log(app, conf.section("log")["path"])
 init_cors(app)
