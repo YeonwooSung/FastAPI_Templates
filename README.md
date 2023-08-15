@@ -25,6 +25,14 @@ The aim of this project is to provide various templates and examples for buildin
         * [Simple Session Server](./basic-functionality/simple-session-server/)
         * [Redis Session Server](./basic-functionality/redis_session_server/)
 
+## Backend Essentials
+
+Let's learn essential stuffs for backend development.
+
+- [Circuit Breaker](./backend-essentials/circuit-breaker/)
+- [Redis Failover](./backend_essentials/redis_failover/)
+- [Service Discovery with Zookeeper](./backend_essentials/service_discovery/)
+
 ## Simple Projects
 
 - [Movie API Server](./sample_projects/fastapi-movie-api/)
