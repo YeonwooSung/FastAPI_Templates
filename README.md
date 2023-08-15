@@ -31,3 +31,11 @@ The aim of this project is to provide various templates and examples for buildin
 - [GeoIP Server](./sample_projects/geoip/)
 - [Sentiment Analyzer](./sample_projects/sentiment_analyzer/)
 - [Simple Web Scraping Server](./sample_projects/scrap/)
+
+## Design Patterns
+
+- [Decorator Pattern](./design_patterns/decorator/)
+- [Factory Pattern](./design_patterns/factory/)
+- [Observer Pattern](./design_patterns/observer/)
+- [Singleton Pattern](./design_patterns/singleton/)
+- [Strategy Pattern](./design_patterns/strategy/)
