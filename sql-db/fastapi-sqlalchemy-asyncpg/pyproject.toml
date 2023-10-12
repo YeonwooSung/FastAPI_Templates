@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "fastapi-sqlalchemy-asyncpg"
+version = "0.0.7"
+description = ""
+authors = ["Jakub Miazek <the@grillazz.com>"]
+packages = []
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "0.103.2"
+pydantic = {version = "2.4.2", extras = ["email"]}
+pydantic-settings = "2.0.3"
+sqlalchemy = "2.0.21"
+uvicorn = { version = "0.23.2", extras = ["standard"]}
+asyncpg = "0.28.0"
+alembic = "1.12.0"
+httpx = "*"
+pytest-cov = "*"
+pytest-asyncio = "*"
+uvloop = "*"
+httptools = "*"
+rich = "*"
+pyjwt = {version = "*", extras = ["cryptography"]}
+redis = "*"
+passlib = {version = "^1.7.4", extras = ["bcrypt"]}
+
+[tool.poetry.dev-dependencies]
+devtools = { extras = ["pygments"], version = "*" }
+black = "*"
+safety = "*"
+pyupgrade = "*"
+ipython = "*"
+ruff = "*"
+
+
+[tool.poetry.group.dev.dependencies]
+tryceratops = "^1.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+
+select = ["E", "F", "UP", "N", "C", "B"]
+
+# Exclude a variety of commonly ignored directories.
+exclude = ["alembic",]
+# Assume Python 3.10.
+target-version = "py311"
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends",]
+
+[tool.pytest.ini_options]
+addopts = "-v --doctest-modules --doctest-glob=*.md --ignore=alembic"
+asyncio_mode = "strict"
+env_files = [".env"]
+
+[tool.tryceratops]
+exclude = ["alembic",]

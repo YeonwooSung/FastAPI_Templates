@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.11" ]
+        poetry-version: [ "1.6.1" ]
+
+    env:
+      PYTHONDONTWRITEBYTECODE: 1
+      PYTHONUNBUFFERED: 1
+      SQL_DB: testdb
+      SQL_HOST: 127.0.0.1
+      SQL_USER: app-user
+      POSTGRES_PASSWORD: secret
+      PGPASSWORD: secret
+      SQL_URL: postgresql+asyncpg://app-user:secret@localhost:5432/testdb
+      REDIS_HOST: 127.0.0.1
+      REDIS_PORT: 6379
+      REDIS_DB: 2
+      REDIS_URL: redis://127.0.0.1:6379/2
+      JWT_EXPIRE: 3600
+      JWT_ALGORITHM: HS256
+
+    services:
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
+      sqldb:
+        image: postgres:14
+        env:
+          POSTGRES_USER: app-user
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a health check
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create database schema
+        run: PGPASSWORD=secret psql -h 127.0.0.1 -d testdb -U app-user -c "CREATE SCHEMA shakespeare; CREATE SCHEMA happy_hog;"
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+      - name: Test Code
+        run: poetry run pytest
+      - name: Lint Code
+        run: poetry run ruff .
