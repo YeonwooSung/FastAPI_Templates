@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "fd746fef-3ae9-49e4-8fd4-f79019738639",
+		"name": "FastApi Batch Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{fastapi_url}}/products/1",
+					"host": [
+						"{{fastapi_url}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{fastapi_url}}/products?skip=0&limit=100",
+					"host": [
+						"{{fastapi_url}}"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Example product\",\r\n    \"description\": \"My example product\"\r\n}"
+				},
+				"url": {
+					"raw": "{{fastapi_url}}/products",
+					"host": [
+						"{{fastapi_url}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Updated Product\"\r\n}"
+				},
+				"url": {
+					"raw": "{{fastapi_url}}/products/1",
+					"host": [
+						"{{fastapi_url}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Batch",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"requests\": [\r\n    {\r\n      \"id\": \"1\",\r\n      \"url\": \"/products?skip=0&limit=1\",\r\n      \"method\": \"GET\"\r\n    },\r\n     {\r\n      \"id\": \"2\",\r\n      \"url\": \"/products/1\",\r\n      \"method\": \"GET\"\r\n    },\r\n    {\r\n        \"id\": \"3\",\r\n        \"url\": \"/products\",\r\n        \"method\": \"POST\",\r\n        \"headers\": {\r\n            \"Content-Type\": \"application/json\"\r\n        },\r\n        \"body\": {\r\n            \"title\": \"Test Product\"\r\n        }\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{fastapi_url}}/batch",
+					"host": [
+						"{{fastapi_url}}"
+					],
+					"path": [
+						"batch"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "fastapi_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
