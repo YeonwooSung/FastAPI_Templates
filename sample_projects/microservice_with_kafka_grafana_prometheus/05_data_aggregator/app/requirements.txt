@@ -1,5 +1,5 @@
 asyncio==3.4.3
-aiohttp==3.8.5
+aiohttp==3.9.0
 configloader==1.0.1
 faust[rocksdb, fast, uvloop]==1.10.4
 prometheus-client===0.11.0
