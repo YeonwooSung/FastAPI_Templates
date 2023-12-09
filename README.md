@@ -29,6 +29,7 @@ The aim of this project is to provide various templates and examples for buildin
 
 Let's learn essential stuffs for backend development.
 
+- [Caching on Redis with Postgres Async Repository](./backend_essentials/fastapi_cache/)
 - [Circuit Breaker](./backend-essentials/circuit-breaker/)
 - [Redis Failover](./backend_essentials/redis_failover/)
 - [Service Discovery with Zookeeper](./backend_essentials/service_discovery/)
