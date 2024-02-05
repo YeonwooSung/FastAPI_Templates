@@ -10,7 +10,7 @@ packages = [{include = "fastapi_crud"}]
 python = "^3.9"
 
 [tool.poetry.group.dev.dependencies]
-fastapi = "^0.95.2"
+fastapi = "^0.109.1"
 uvicorn = "^0.22.0"
 SQLAlchemy = "^2.0.15"
 
