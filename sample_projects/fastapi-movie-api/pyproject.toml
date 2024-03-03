@@ -7,14 +7,14 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.109.1"
+fastapi = "^0.110.0"
 sqlmodel = "^0.0.8"
 slowapi = "^0.1.8"
 passlib = "^1.7.4"
 python-decouple = "^3.8"
 uvicorn = "^0.22.0"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
-python-multipart = "^0.0.6"
+python-multipart = "^0.0.7"
 
 
 [build-system]
