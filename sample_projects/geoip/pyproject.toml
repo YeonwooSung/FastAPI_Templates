@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.109.1"
+fastapi = "^0.110.0"
 geoip2 = "^4.7.0"
 pydantic = "^1.10.7"
 httpx = "^0.24.0"
