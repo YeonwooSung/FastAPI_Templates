@@ -24,7 +24,7 @@ from modules.book.usecase.deleteBook import api as delete_book_api
 from modules.book.usecase.findBookByTitle import api as find_book_api
 
 
-# Insert Container
+# Init Container
 container = Container()
 
 # Get DB from Container

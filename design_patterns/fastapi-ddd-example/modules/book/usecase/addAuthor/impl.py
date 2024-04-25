@@ -16,6 +16,7 @@ class AddAuthorUseCase(BaseUseCase[BookPersistenceUnitOfWork]):
         self._event = event
         self._uow = uow
 
+
     # Transaction order
     @async_transactional()
     @EventDispatcher()
@@ -24,7 +25,11 @@ class AddAuthorUseCase(BaseUseCase[BookPersistenceUnitOfWork]):
         book.add_author(command)
 
         # Publish Event
-        await event_handler.store(event=self._event,
-                                  param=AuthorAddedToBookDomainEvent(book_id=command.book_id,
-                                                                     author_id=command.author_id))
+        await event_handler.store(
+            event=self._event,
+            param=AuthorAddedToBookDomainEvent(
+                book_id=command.book_id,
+                author_id=command.author_id
+            )
+        )
         return book
