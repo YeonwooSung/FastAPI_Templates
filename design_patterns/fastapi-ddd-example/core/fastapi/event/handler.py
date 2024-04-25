@@ -6,10 +6,16 @@ from typing import Type, Dict, Union, Optional, NoReturn
 from pydantic import BaseModel
 
 from common.protocols.event import BaseEvent
-from core.fastapi.event.exception import (InvalidEventTypeException, InvalidParameterTypeException,
-                                          EmptyContextException, ParameterCountException, RequiredParameterException)
+from core.fastapi.event.exception import (
+    InvalidEventTypeException,
+    InvalidParameterTypeException,
+    EmptyContextException,
+    ParameterCountException,
+    RequiredParameterException,
+)
 
-_handler_context: ContextVar[Optional, "EventHandler"] = ContextVar("_handler_context", default=None)
+
+_handler_context = ContextVar("_handler_context", default=None)
 
 
 class EventHandlerValidator:

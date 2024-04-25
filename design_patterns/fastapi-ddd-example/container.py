@@ -20,9 +20,17 @@ from modules.book.usecase.newBook.impl import NewBookUseCase
 
 
 class Container(DeclarativeContainer):
-    db = Singleton(AsyncSQLAlchemy, db_uri='{engine}://{username}:{password}@{host}:{port}/{db_name}'.format(
-        engine='postgresql+asyncpg', username='postgres', password='postgres',
-        host='127.0.0.1', port=5432, db_name='ddd_book'))
+    db = Singleton(
+        AsyncSQLAlchemy,
+        db_uri='{engine}://{username}:{password}@{host}:{port}/{db_name}'.format(
+            engine='postgresql+asyncpg',
+            username='postgres',
+            password='postgres',
+            host='127.0.0.1',
+            port=5432,
+            db_name='ddd_book',
+        )
+    )
 
     # Unit Of Work
     author_persistence_unit_of_work = Factory(AuthorPersistenceUnitOfWork, engine=db.provided.engine)
@@ -36,10 +44,17 @@ class Container(DeclarativeContainer):
     book_persistence_adapter = Factory(BookPersistenceAdapter, uow=book_persistence_unit_of_work)
 
     # Use Case
-    add_book_to_author_use_case = Factory(AddBookToAuthorUseCase, uow=author_persistence_unit_of_work)
-    add_book_to_author_event_handler = Factory(AddBookToAuthorEventHandler, uc=add_book_to_author_use_case)
-    add_author_use_case = Factory(AddAuthorUseCase, uow=book_persistence_unit_of_work,
-                                  event=add_book_to_author_event_handler)
+    add_book_to_author_use_case = Factory(
+        AddBookToAuthorUseCase, uow=author_persistence_unit_of_work
+    )
+    add_book_to_author_event_handler = Factory(
+        AddBookToAuthorEventHandler, uc=add_book_to_author_use_case
+    )
+    add_author_use_case = Factory(
+        AddAuthorUseCase,
+        uow=book_persistence_unit_of_work,
+        event=add_book_to_author_event_handler
+    )
 
     new_author_use_case = Factory(NewAuthorUseCase, uow=author_persistence_unit_of_work)
     delete_book_use_case = Factory(DeleteBookUseCase, uow=book_persistence_unit_of_work)

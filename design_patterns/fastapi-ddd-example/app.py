@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from container import Container
@@ -21,22 +23,19 @@ from modules.book.usecase.addAuthor import api as add_author_api
 from modules.book.usecase.deleteBook import api as delete_book_api
 from modules.book.usecase.findBookByTitle import api as find_book_api
 
-app = FastAPI(default_response_class=ORJSONResponse)
-add_routes([author_router, book_router], app)
 
-# Insert Container (IoC)
+# Insert Container
 container = Container()
-container.wire(modules=[new_author_api, new_book_api, add_author_api, delete_book_api, find_book_api])
 
-app.container = container
+# Get DB from Container
 db = container.db()
 
-app.add_middleware(EventHandlerMiddleware)
-init_error_handler(app, 'contact@neonkid.xyz')
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    #
+    # app startup
+    #
 
-
-@app.on_event("startup")
-async def on_startup():
     await db.connect(echo=True)
     await db.create_database()
 
@@ -46,9 +45,32 @@ async def on_startup():
     book_persistence_mapper.start_mapper()
     book_query_mapper.start_mapper()
 
+    yield
 
-@app.on_event("shutdown")
-async def on_shutdown():
+    #
+    # app shutdown
+    #
+
     clear_mappers()
 
     await db.disconnect()
+
+
+app = FastAPI(default_response_class=ORJSONResponse, lifespan=lifespan)
+add_routes([author_router, book_router], app)
+
+# IoC (Inversion of Control)
+container.wire(
+    modules=[
+        new_author_api,
+        new_book_api,
+        add_author_api,
+        delete_book_api,
+        find_book_api,
+    ]
+)
+
+app.container = container
+
+app.add_middleware(EventHandlerMiddleware)
+init_error_handler(app, 'neos960518@gmail.com')
