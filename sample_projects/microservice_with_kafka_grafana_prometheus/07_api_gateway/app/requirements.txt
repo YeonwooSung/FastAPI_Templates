@@ -1,5 +1,5 @@
 asyncio==3.4.3
-aiohttp==3.9.2
+aiohttp==3.10.2
 uvloop==0.15.3
 fastapi==0.109.1
 uvicorn[standard]==0.14.0
