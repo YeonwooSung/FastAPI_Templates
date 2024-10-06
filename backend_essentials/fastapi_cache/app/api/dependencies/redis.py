@@ -1,6 +1,6 @@
 import redis
 
-from core.config import settings
+from utils.config import settings
 
 
 def cache():

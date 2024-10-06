@@ -9,6 +9,7 @@ from api.dependencies.redis import cache
 from api.dependencies.repositories import get_repository
 from db.errors import EntityDoesNotExist
 from db.repositories.profiles import ProfileRepository
+from utils.disk_caches import cache_decorator, delete_cache_decorator
 from schemas.profiles import ProfileCreate, ProfilePatch, ProfileRead
 
 router = APIRouter()
@@ -78,6 +79,7 @@ async def get_profiles(
     status_code=status.HTTP_200_OK,
     name="get_profile",
 )
+@cache_decorator(expire=3600)
 async def get_profile(
     profile_id: UUID,
     redis_client: cache = Depends(cache),
@@ -103,6 +105,7 @@ async def get_profile(
     status_code=status.HTTP_204_NO_CONTENT,
     name="delete_profile",
 )
+@delete_cache_decorator
 async def delete_profile(
     profile_id: UUID,
     redis_client: cache = Depends(cache),
