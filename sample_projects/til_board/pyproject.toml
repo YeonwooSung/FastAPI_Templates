@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "til_board"
+version = "0.1.0"
+description = ""
+authors = ["YeonwooSung <neos960518@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.109.0"
+uvicorn = {extras = ["standard"], version = "^0.25.0"}
+py-ulid = "^1.0.3"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+sqlalchemy = "^2.0.25"
+mysqlclient = "^2.2.4"
+alembic = "^1.13.1"
+dependency-injector = "^4.41.0"
+pydantic = {extras = ["email"], version = "^2.5.3"}
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-multipart = "^0.0.6"
+python-dotenv = "^1.0.0"
+pydantic-settings = "^2.1.0"
+celery = "^5.3.6"
+requests = "^2.31.0"
+pytest = "^8.0.0"
+freezegun = "^1.4.0"
+pytest-mock = "^3.12.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
