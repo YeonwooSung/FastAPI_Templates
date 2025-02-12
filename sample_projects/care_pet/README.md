@@ -1,10 +1,8 @@
 # Care Pet ScyllaDB IoT example
 
-This is an example project that demonstrates a generic IoT use case with
-ScyllaDB in Python.
+This is an example project that demonstrates a generic IoT use case with ScyllaDB in Python.
 
-The project simulates an IoT application for pet owners to monitor a variety
-of metrics about their pets (for example heart rate or temperature).
+The project simulates an IoT application for pet owners to monitor a variety of metrics about their pets (for example heart rate or temperature).
 
 The application has three modules:
 
@@ -20,17 +18,10 @@ The application has three modules:
 * [docker](https://www.docker.com/)
 * [docker-compose](https://docs.docker.com/compose/)
 
-### Clone repository and install dependencies
-Clone the repository and open the root directory of the project:
-```bash
-git clone https://github.com/scylladb/care-pet
-cd care-pet/python
-```
-
 Create a new virtual environment and activate it:
 ```bash
-virtualenv env
-source env/bin/activate
+virtualenv venv
+source venv/bin/activate
 ```
 
 Install all Python dependencies:
