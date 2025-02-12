@@ -40,6 +40,7 @@ Let's learn essential stuffs for backend development.
 - [GeoIP Server](./sample_projects/geoip/)
 - [Sentiment Analyzer](./sample_projects/sentiment_analyzer/)
 - [Simple Web Scraping Server](./sample_projects/scrap/)
+- [Simple pet care service (use scylladb as backend)](./sample_projects/care_pet)
 
 ## Design Patterns
 
