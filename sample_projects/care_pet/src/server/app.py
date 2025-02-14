@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from db.client import ScyllaClient
 from db import config
 
+
 app = FastAPI()
 db_config = vars(config.argument_parser().parse_args())
 db = ScyllaClient(db_config)

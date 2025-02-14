@@ -3,20 +3,20 @@ from datetime import datetime
 
 import uuid
 import random
-import dognames
-import names
-import argparse
 from db import config
 from db.client import ScyllaClient
 
 
 def generate_random_pet_name():
-    return dognames.male() if random.randint(1, 2)==1 else dognames.female()
+    if random.randint(1, 2) == 1:
+        return random.choice(["Max", "Buddy", "Charlie", "Jack", "Cooper", "Rocky", "Bear", "Duke", "Toby", "Tucker"])
+    else:
+        return random.choice(["Bella", "Lucy", "Daisy", "Luna", "Lola", "Sadie", "Molly", "Bailey", "Maggie", "Sophie"])
 
 
 def generate_random_measurement_value(sensor_type):
     if sensor_type == "T":
-        return 101 + random.uniform(0, 10) - 4;
+        return 101 + random.uniform(0, 10) - 4
     elif sensor_type == "L":
       return 35 + random.uniform(0, 5) - 2
     return random.uniform(0, 20)
@@ -31,10 +31,11 @@ def generate_random_measurement(sensor):
   
   
 def create_owner():
+    name = random.choice(["John", "Jane", "Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Helen"])
     return {
         "owner_id": uuid.uuid4(),
         "address": "home",
-        "name": names.get_full_name() # generate random person's name
+        "name": name,
     }
 
 
@@ -86,48 +87,54 @@ def generate_measurements(sensors, count=2, delay=1):
     
 def init_args_parser():
     arg_parser = config.argument_parser()
-    arg_parser.add_argument("-b", "--buffer-interval",
-                        help="Sensors measurement interval (seconds)",
-                        required=False, default=10)
-    arg_parser.add_argument("-m", "--measure",
-                        help="Buffer to accumulate measures (seconds)",
-                        required=False, default=1)
+    arg_parser.add_argument(
+        "-b", "--buffer-interval",
+        help="Sensors measurement interval (seconds)",
+        required=False, default=10
+    )
+    arg_parser.add_argument(
+        "-m", "--measure",
+        help="Buffer to accumulate measures (seconds)",
+        required=False, default=1
+    )
     return vars(arg_parser.parse_args())
 
 
 def main():
     # parse config arguments from command line input
     config = init_args_parser()
-    
+
     # both arguments are defined in seconds
     measure_sec = int(config["measure"])
     buffer_interval_sec = int(config["buffer_interval"])
-    
+
     if measure_sec > buffer_interval_sec:
         raise ValueError("`--measure` cannot be larger than `--buffer-interval`")
-    
+
     # calculate batch size based on the `buffer_interval` argument
     batch_size = buffer_interval_sec / measure_sec
-    
+
     # create random static data
     new_owner = create_owner()
     new_pet = create_pet(owner=new_owner)
     new_sensors = create_sensors(pet=new_pet)
-    
+
     print("Welcome to the Pet collar simulator")
     print(f"New owner # {new_owner['owner_id']}")
     print(f"New pet # {new_pet['pet_id']}")
     for i in range(0, len(new_sensors)):
         print(f"New sensor({i}) # {new_sensors[i]['sensor_id']}")
-    
+
     with ScyllaClient(config) as client:
         insert_pet_static_data(client, new_pet, new_owner, new_sensors)
         # infinite loop to insert random time-series data into the measurement table
         while (True):
-            measurements_data = generate_measurements(new_sensors,
-                                                      count=batch_size,
-                                                      delay=measure_sec)
+            measurements_data = generate_measurements(
+                new_sensors,
+                count=batch_size,
+                delay=measure_sec
+            )
             print("Pushing data")
             client.insert_batch_data("carepet.measurement", measurements_data)
-        
+
 main()
