@@ -49,3 +49,9 @@ Let's learn essential stuffs for backend development.
 - [Observer Pattern](./design_patterns/observer/)
 - [Singleton Pattern](./design_patterns/singleton/)
 - [Strategy Pattern](./design_patterns/strategy/)
+
+## Tips
+
+- FastAPI's sync operations runs in threadpool
+    - The size of the threadpool is 40, so if you exceed that number, sync operations might be blocked
+
