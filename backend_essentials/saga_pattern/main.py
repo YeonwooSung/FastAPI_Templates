@@ -1,8 +1,3 @@
-# FastAPI 기반 금융 트랜잭션 서비스 (SAGA 패턴)
-
-# 필요한 라이브러리 설치
-# pip install fastapi uvicorn sqlalchemy pydantic python-dotenv redis
-
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends, status
 from pydantic import BaseModel, Field
 from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, DateTime, ForeignKey
