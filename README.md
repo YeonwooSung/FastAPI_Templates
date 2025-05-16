@@ -24,6 +24,9 @@ The aim of this project is to provide various templates and examples for buildin
     * Session
         * [Simple Session Server](./basic-functionality/simple-session-server/)
         * [Redis Session Server](./basic-functionality/redis_session_server/)
+- Advanced projects
+    * [Financial transaction API server with distributed lock and CAS pattern](./sample_projects/financial-transactions/)
+    * [Pet care service (use scylladb as backend)](./sample_projects/care_pet/)
 
 ## Backend Essentials
 
