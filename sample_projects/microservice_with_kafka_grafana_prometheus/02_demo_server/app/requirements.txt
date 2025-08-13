@@ -1,9 +1,9 @@
 asyncio==3.4.3
-aiohttp==3.12.14
+aiohttp==3.12.15
 uvloop==0.15.3
 fastapi==0.109.1
 uvicorn[standard]==0.14.0
-starlette==0.41.3
+starlette==0.47.2
 starlette-exporter==0.10.0
 configloader==1.0.1
 prometheus-client===0.11.0
