@@ -17,7 +17,7 @@ grpcio-tools = "^1.51.1"
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.3.0"
+black = "^26.3.1"
 isort = "^5.13.2"
 
 [build-system]

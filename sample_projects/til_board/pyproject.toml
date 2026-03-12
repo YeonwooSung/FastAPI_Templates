@@ -17,7 +17,7 @@ alembic = "^1.13.1"
 dependency-injector = "^4.41.0"
 pydantic = {extras = ["email"], version = "^2.5.3"}
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
-python-multipart = "^0.0.7"
+python-multipart = "^0.0.22"
 python-dotenv = "^1.0.0"
 pydantic-settings = "^2.1.0"
 celery = "^5.3.6"
